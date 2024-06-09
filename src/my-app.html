@@ -1,0 +1,23 @@
+<div class="app-container">
+   <div class="menu-container">
+      <div repeat.for="channel of channels" class="channel ${channel === this.currentChannel ? 'active' : ''}" click.trigger="joinChannel(channel)">${channel}</div>
+      <div class="channel" click.trigger="joinChannel()">+ New channel</div>
+   </div>
+
+   <div class="chat-container">
+      <div class="chat-header">#${currentChannel}<span click.trigger="setProfile()" class="user-icon">&#128100;</span></div>
+      <div class="chat-messages">
+         <button class="load-more-button" show.bind="canLoadMoreMessages" click.trigger="getMessages(false)">Load more messages</button>
+
+         <div class="message" repeat.for="message of messages">
+            <span click.trigger="deleteMessage(message.id, $index)" if.bind="message.pubkey === loggedUser" class="delete-icon">&#128465;</span>
+            <span class="username">${message.username ? message.username : message.pubkey}:</span>
+            ${message.content}
+         </div>
+      </div>
+   
+      <div class="chat-input">
+         <input type="text" value.bind="inputMessage" keydown.trigger="sendMessage($event)" placeholder="Type a message...">
+      </div>
+   </div>
+</div>
